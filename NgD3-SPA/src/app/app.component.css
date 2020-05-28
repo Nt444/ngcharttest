@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  background-color: #eee;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 1000px;
+  margin: 100px auto;
+}
+app-area-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
