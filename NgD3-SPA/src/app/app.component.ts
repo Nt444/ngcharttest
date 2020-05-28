@@ -10,8 +10,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
 
   chartData = [];
 
-  transitionTime = 2000;
+  transitionTime = 500;
   refreshInterval;
+  i = 0;
+  prevPoint = null;
 
   constructor() { }
 
@@ -24,7 +26,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
     }
     this.generateData();
     this.refreshInterval = setInterval(() => {
-      this.generateData();
+      if  (document.hasFocus()) {
+        this.generateData();
+      }
     }, this.transitionTime);
   }
 
@@ -39,15 +43,22 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
   }
 
   generateData() {
-    this.chartData = [];
+    const max = 100;
+    const data = [...this.chartData];
     const random = randomInt(10, 20);
-    for (let i = 0; i < 100; i++) {
-      const x = i / random / 2;
-      this.chartData.push({
-        x: i,
-        y: Math.sin(x * x) + Math.sin(x)
+    for (let i = 0; i < max - this.chartData.length + 1; i++, this.i++) {
+      const x = this.i / 10;
+      data.push(this.prevPoint = {
+        x: this.i,
+        y: Math.sin(x) + x / 5,
+        prv: this.prevPoint
       });
     }
+    while (data.length > max) {
+      data.shift();
+    }
+
+    this.chartData = data;
   }
 }
 
