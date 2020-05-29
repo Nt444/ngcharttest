@@ -1,0 +1,5 @@
+@media(max-width: 1024px) {
+  .trade-visuals {
+    flex-direction: column;
+  }
+}
