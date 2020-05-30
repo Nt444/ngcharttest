@@ -37,7 +37,11 @@ export class ChartMainComponent implements OnInit {
     },
     elements: {
       line: {
-          tension: 0 // disables bezier curves
+        tension: 0, // disables bezier curves
+        borderWidth: 2
+      },
+      point: {
+        radius: 0
       }
     },
     tooltips: {

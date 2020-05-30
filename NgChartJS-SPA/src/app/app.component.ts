@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  title = 'NgChartJS-SPA';
-
   public labels = [];
 
   public data = [
@@ -16,18 +14,14 @@ export class AppComponent implements OnInit {
       data: [],
       label: 'Bid',
       fill: false,
-      borderColor: 'rgba(0, 200, 0, 0.8)',
-      borderWidth: 2,
-      pointRadius: 0
+      borderColor: 'rgba(0, 200, 0, 0.8)'
     },
     {
       data: [],
       label: 'Ask',
       fill: '0',
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
       borderColor: 'rgba(255, 0, 0, 0.8)',
-      borderWidth: 2,
-      pointRadius: 0
+      backgroundColor: 'rgba(255, 255, 255, 0.05)'
     }
   ];
 
