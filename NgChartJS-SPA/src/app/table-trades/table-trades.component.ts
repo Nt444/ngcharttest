@@ -15,7 +15,10 @@ export class TableTradesComponent implements OnInit {
 
   ngOnInit(): void {
     this.tradeDataService.graphData.subscribe((ticks: Tick[]) => {
-      this.ticks = ticks.reverse();
+      ticks.reverse();
+      if (ticks.length > 0) {
+        this.ticks = ticks;
+      }
     });
   }
 }

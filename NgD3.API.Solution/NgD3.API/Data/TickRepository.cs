@@ -17,6 +17,16 @@ namespace NgD3.API.Data
             this.repo = repo;
         }
 
+        public async Task<Info> GetGeneralInfo()
+        {
+            return new Info
+            {
+                TickCount = await repo.Ticks.CountAsync(),
+                MomentStart = await repo.Ticks.MinAsync(x => x.Moment),
+                MomentEnd = await repo.Ticks.MaxAsync(x => x.Moment),
+            };
+        }
+
         public async Task<List<Tick>> GetTicks(long startMoment, int count)
         {
             //Stopwatch sw = new Stopwatch();

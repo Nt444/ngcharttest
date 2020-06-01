@@ -74,21 +74,25 @@ export class ChartMainComponent implements OnInit {
 
   counter = 0;
   timeInterval: { from: number, to: number } = { from: 0, to: 0 };
+  loading = true;
 
   constructor(private tradeDataService: TradeDataService) { }
 
   ngOnInit(): void {
     this.tradeDataService.graphData.subscribe((ticks: Tick[]) => {
-      this.data[0].data = ticks.map(tick => tick.bid);
-      this.data[1].data = ticks.map(tick => tick.ask);
-      this.labels = ticks.map(tick => tick.moment);
-      this.counter = this.tradeDataService.counter;
-      if (ticks?.length > 0) {
-        this.timeInterval = {
-          from: ticks[0].moment,
-          to: ticks[ticks.length - 1].moment
-        };
+      if (ticks.length > 0) {
+        this.data[0].data = ticks.map(tick => tick.bid);
+        this.data[1].data = ticks.map(tick => tick.ask);
+        this.labels = ticks.map(tick => tick.moment);
+        this.counter = this.tradeDataService.counter;
+        if (ticks?.length > 0) {
+          this.timeInterval = {
+            from: ticks[0].moment,
+            to: ticks[ticks.length - 1].moment
+          };
+        }
       }
+      this.loading = ticks.length === 0;
     });
   }
 }

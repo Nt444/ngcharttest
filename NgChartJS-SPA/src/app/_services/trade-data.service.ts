@@ -3,6 +3,7 @@ import { Observable, Subscriber, Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Tick } from '../_models/tick';
+import { Info } from '../_models/info';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class TradeDataService {
   private dataStorage: Tick[] = [];
   private dataProvider: Subject<Tick[]>;
   private dataGetter: Observable<any>;
+  private loop: NodeJS.Timeout;
 
   public counter = 0;
   public momentCrt = 0;
@@ -20,11 +22,17 @@ export class TradeDataService {
 
   constructor(private http: HttpClient) { }
 
-  init() {
-    this.dataProvider = new Subject();
-    setInterval(() => {
+  start() {
+    this.loop = setInterval(() => {
       this.iteration();
     }, this.interval);
+  }
+
+  stop() {
+    this.dataGetter = null;
+    clearInterval(this.loop);
+    this.loop = null;
+    console.log('stop data');
   }
 
   loadNeeded(moment: number, size: number) {
@@ -36,10 +44,15 @@ export class TradeDataService {
           if (!this.momentCrt) {
             this.momentCrt = this.dataStorage[0].moment;
           }
+          if (x.length === 0) {
+            console.log('dataGetter: no data came');
+            this.stop();
+          }
         },
         error: x => {
-          console.log('dataGetter error ' + x);
-          this.dataGetter = null;
+          console.log('dataGetter: error');
+          console.log(x);
+          this.stop();
         },
         complete: () => {
           console.log('dataGetter complete');
@@ -82,12 +95,17 @@ export class TradeDataService {
 
   get graphData() {
     if (!this.dataProvider) {
-      this.init();
+      this.dataProvider = new Subject();
+      this.start();
     }
     return this.dataProvider;
   }
 
-  reset() {
+  restart(momentStart: number) {
     this.dataStorage = [];
+    this.momentCrt = momentStart;
+    if (!this.loop) {
+      this.start();
+    }
   }
 }

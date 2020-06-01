@@ -1,4 +1,4 @@
-<div class="">
+<div class="chart-container">
   <h3 class="my-3 text-white text-center">
     <span class="counter mr-3">{{counter}}</span>
     <span class="small">
@@ -12,4 +12,9 @@
           [options]="options"
           [chartType]="'line'">
   </canvas>
+  <div class="load-indicator" *ngIf="loading">
+    <div class="load-indicator-content">
+      <span class="h2 text-white">Loading...</span>
+    </div>
+  </div>
 </div>

@@ -24,5 +24,11 @@ namespace NgD3.API.Controllers
         {
             return Ok(await repo.GetTicks(startMoment, count));
         }
+
+        [HttpGet("info")]
+        public async Task<IActionResult> GetGeneralInfo()
+        {
+            return Ok(await repo.GetGeneralInfo());
+        }
     }
 }
