@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber, Subject } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Tick } from '../_models/tick';
-import { Info } from '../_models/info';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +15,7 @@ export class TradeDataService {
 
   public counter = 0;
   public momentCrt = 0;
-  public interval = 500;
+  public interval = 1000;
   public snapSize = 10;
 
   constructor(private http: HttpClient) { }
@@ -40,6 +38,7 @@ export class TradeDataService {
       this.dataGetter = this.http.get(`http://localhost:53030/api/ticks?startmoment=${moment}&count=${size}`);
       this.dataGetter.subscribe({
         next: x => {
+          const initialLoad = this.dataStorage.length === 0;
           this.dataStorage = [...this.dataStorage, ...x];
           if (!this.momentCrt) {
             this.momentCrt = this.dataStorage[0].moment;
@@ -47,6 +46,9 @@ export class TradeDataService {
           if (x.length === 0) {
             console.log('dataGetter: no data came');
             this.stop();
+          }
+          if (x.length !== 0 && initialLoad) {
+            this.iteration();
           }
         },
         error: x => {
@@ -107,5 +109,6 @@ export class TradeDataService {
     if (!this.loop) {
       this.start();
     }
+    this.iteration();
   }
 }

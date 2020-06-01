@@ -17,7 +17,7 @@ export class TableTradesComponent implements OnInit {
     this.tradeDataService.graphData.subscribe((ticks: Tick[]) => {
       ticks.reverse();
       if (ticks.length > 0) {
-        this.ticks = ticks;
+        this.ticks = ticks.slice(0, 25);
       }
     });
   }

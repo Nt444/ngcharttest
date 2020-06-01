@@ -11,6 +11,7 @@ import { TradeDataService } from '../_services/trade-data.service';
 export class DashboardComponent implements OnInit {
 
   momentRange: number;
+  momentStart: number;
   info: Info;
 
   constructor(
@@ -28,9 +29,9 @@ export class DashboardComponent implements OnInit {
   }
 
   changeMomentStart() {
-    const momentStart = this.info.momentStart + (this.info.momentEnd - this.info.momentStart) * this.momentRange / 100;
-    this.tradeDataServise.restart(momentStart);
+    this.momentStart = this.info.momentStart + (this.info.momentEnd - this.info.momentStart) * this.momentRange / 100;
+    this.tradeDataServise.restart(this.momentStart);
 
-    console.log(`momentStart ${momentStart} momentStartPercent ${this.momentRange}`);
+    console.log(`momentStart ${this.momentStart} momentStartPercent ${this.momentRange}`);
   }
 }

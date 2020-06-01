@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   constructor(private dataService: TradeDataService) { }
 
   ngOnInit(): void {
-    this.dataService.interval = 250;
+    this.dataService.interval = 100;
     this.dataService.momentCrt = 0;
     this.dataService.snapSize = 50;
   }

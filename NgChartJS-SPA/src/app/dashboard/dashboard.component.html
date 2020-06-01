@@ -1,14 +1,17 @@
-<form #settingsForm="ngForm" class="mt-4">
-  <div *ngIf="info" class="my-1">
+<form #settingsForm="ngForm" class="mt-4" *ngIf="info">
+  <div class="my-1">
     <span class="text-secondary">Ticks in DB: </span>
     <span class="text-white">{{info.tickCount | number}}</span>
   </div>
   <div class="form-group mb-1">
-    <label for="formControlRange" class="text-secondary">Start moment</label>
+    <label for="formControlRange">
+      <span class="text-secondary">Start moment:</span>&nbsp;
+      <span class="text-white">{{momentStart | date:'dd-MM-yy HH:mm:ss'}}</span>
+    </label>
     <input type="range" class="form-control-range" id="formControlRange" name="formControlRange"
         [(ngModel)]="momentRange" (change)="changeMomentStart()">
   </div>
-  <div class="momentEdges d-flex justify-content-between text-white mb-3" *ngIf="info">
+  <div class="d-flex justify-content-between text-white mb-3" *ngIf="info">
     <span>
       <span class="text-secondary">{{info.momentStart | date:'dd-MM-yy'}}</span>&nbsp;
       <span>{{info.momentStart | date:'HH:mm:ss'}}</span>

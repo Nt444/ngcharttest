@@ -1,6 +1,6 @@
 .counter {
   display: inline-block;
-  min-width: 100px;
+  min-width: 80px;
 }
 .chart-container {
   position: relative;
