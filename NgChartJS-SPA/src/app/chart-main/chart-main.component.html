@@ -1,10 +1,15 @@
 <div class="">
-  <h2 class="my-3 text-white">{{count}}</h2>
+  <h3 class="my-3 text-white text-center">
+    <span class="counter mr-3">{{counter}}</span>
+    <span class="small">
+      <span class="text-secondary">{{timeInterval.from | date:'dd-MM-yy'}}</span> {{timeInterval.from | date:'HH:mm:ss'}} -
+      <span class="text-secondary">{{timeInterval.to | date:'dd-MM-yy'}}</span> {{timeInterval.from | date:'HH:mm:ss'}}
+    </span>
+  </h3>
   <canvas baseChart
           [datasets]="data"
           [labels]="labels"
-          [options]="barChartOptions"
-          [legend]="barChartLegend"
-          [chartType]="barChartType">
+          [options]="options"
+          [chartType]="'line'">
   </canvas>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TradeDataService } from '../_services/trade-data.service';
+import { Tick } from '../_models/tick';
 
 @Component({
   selector: 'app-chart-main',
@@ -7,11 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ChartMainComponent implements OnInit {
 
-  @Input() data: any;
-  @Input() labels: any;
-  @Input() count: number;
-
-  public barChartOptions = {
+  public options = {
     scaleShowVerticalLines: false,
     responsive: true,
     animation: {
@@ -30,6 +28,13 @@ export class ChartMainComponent implements OnInit {
         }
       }],
       xAxes: [{
+        type: 'time',
+        time: {
+          // unit: 'minute'
+          displayFormats: {
+            second: 'H:mm:ss'
+          }
+        },
         ticks: {
           fontColor: 'white'
         }
@@ -49,10 +54,41 @@ export class ChartMainComponent implements OnInit {
     }
   };
 
-  public barChartType = 'line';
-  public barChartLegend = true;
+  labels = [];
 
-  constructor() { }
+  data = [
+    {
+      data: [],
+      label: 'Bid',
+      fill: false,
+      borderColor: 'rgba(0, 200, 0, 0.8)'
+    },
+    {
+      data: [],
+      label: 'Ask',
+      fill: '0',
+      borderColor: 'rgba(255, 0, 0, 0.8)',
+      backgroundColor: 'rgba(255, 255, 255, 0.05)'
+    }
+  ];
 
-  ngOnInit(): void { }
+  counter = 0;
+  timeInterval: { from: number, to: number } = { from: 0, to: 0 };
+
+  constructor(private tradeDataService: TradeDataService) { }
+
+  ngOnInit(): void {
+    this.tradeDataService.graphData.subscribe((ticks: Tick[]) => {
+      this.data[0].data = ticks.map(tick => tick.bid);
+      this.data[1].data = ticks.map(tick => tick.ask);
+      this.labels = ticks.map(tick => tick.moment);
+      this.counter = this.tradeDataService.counter;
+      if (ticks?.length > 0) {
+        this.timeInterval = {
+          from: ticks[0].moment,
+          to: ticks[ticks.length - 1].moment
+        };
+      }
+    });
+  }
 }

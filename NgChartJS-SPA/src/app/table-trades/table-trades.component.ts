@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TradeDataService } from '../_services/trade-data.service';
+import { Tick } from '../_models/tick';
 
 @Component({
   selector: 'app-table-trades',
@@ -7,27 +9,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TableTradesComponent implements OnInit {
 
-  @Input() data: any;
-  @Input() labels: any;
-  showCount = 30;
+  ticks: Tick[];
 
-  constructor() { }
+  constructor(private tradeDataService: TradeDataService) { }
 
   ngOnInit(): void {
-  }
-
-  data2Show() {
-    const result = [];
-    const bids = this.data[0].data;
-    const asks = this.data[1].data;
-    const iLast = Math.max(0, bids.length - this.showCount);
-    for (let i = bids.length - 1; i >= iLast; i--) {
-      result.push({
-        label: this.labels[i],
-        bids: bids[i],
-        asks: asks[i]
-      });
-    }
-    return result;
+    this.tradeDataService.graphData.subscribe((ticks: Tick[]) => {
+      this.ticks = ticks.reverse();
+    });
   }
 }
