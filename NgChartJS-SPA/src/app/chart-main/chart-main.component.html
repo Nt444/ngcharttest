@@ -1,9 +1,11 @@
 <div class="chart-container">
-  <h3 class="my-3 text-white text-center">
-    <span class="counter mr-3 text-left">{{counter}}</span>
-    <span class="small">
-      <span class="text-secondary">{{timeInterval.from | date:'dd-MM-yy'}}</span> {{timeInterval.from | date:'HH:mm:ss'}} -
-      <span class="text-secondary">{{timeInterval.to | date:'dd-MM-yy'}}</span> {{timeInterval.to | date:'HH:mm:ss'}}
+  <h3 class="m-3 text-white d-flex">
+    <span class="counter mr-3">{{counter}}</span>
+    <span class="small align-self-end">
+      <span class="text-secondary">{{timeInterval.from | date:'dd-MM-yy'}}</span><span> {{timeInterval.from | date:'HH:mm:ss'}}</span>
+      <span class="separator-dash"> - </span>
+      <span class="separator-br"><br></span>
+      <span class="text-secondary">{{timeInterval.to | date:'dd-MM-yy'}}</span><span> {{timeInterval.to | date:'HH:mm:ss'}}</span>
     </span>
   </h3>
   <canvas baseChart

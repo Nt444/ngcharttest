@@ -76,14 +76,14 @@ export class ChartMainComponent implements OnInit {
       data: [],
       label: 'Bid',
       fill: false,
-      borderColor: 'rgba(0, 200, 0, 0.8)',
+      borderColor: 'rgba(0, 200, 0, 1)',
       backgroundColor: 'rgba(0, 200, 0, 0.3)'
     },
     {
       data: [],
       label: 'Ask',
       fill: false,
-      borderColor: 'rgba(255, 0, 0, 0.8)',
+      borderColor: 'rgba(255, 0, 0, 1)',
       backgroundColor: 'rgba(255, 0, 0, 0.4)'
     }
   ];
