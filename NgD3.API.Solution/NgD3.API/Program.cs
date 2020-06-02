@@ -15,6 +15,17 @@ namespace NgD3.API
         {
             var host = CreateWebHostBuilder(args).Build();
 
+            //SeedDB(host);
+
+            host.Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+
+        static void SeedDB(IWebHost host)
+        {
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -32,12 +43,6 @@ namespace NgD3.API
                     Debug.WriteLine("Error Seeding ex: " + ex);
                 }
             }
-
-            host.Run();
         }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
     }
 }

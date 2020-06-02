@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Tick } from '../_models/tick';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class TradeDataService {
   private dataStorage: Tick[] = [];
   private dataProvider: Subject<Tick[]>;
   private dataGetter: Observable<any>;
-  private loop: NodeJS.Timeout;
+  private loop: any;
 
   public counter = 0;
   public momentCrt = 0;
@@ -35,7 +36,7 @@ export class TradeDataService {
 
   loadNeeded(moment: number, size: number) {
     if (!this.dataGetter) {
-      this.dataGetter = this.http.get(`http://localhost:53030/api/ticks?startmoment=${moment}&count=${size}`);
+      this.dataGetter = this.http.get(`${environment.apiUrl}ticks?startmoment=${moment}&count=${size}`);
       this.dataGetter.subscribe({
         next: x => {
           const initialLoad = this.dataStorage.length === 0;
